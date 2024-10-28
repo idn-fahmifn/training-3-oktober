@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckAge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -64,26 +65,15 @@ Route::get('cek-umur', function(){
 })->name('cek-umur');
 
 // Handle form submission untuk mengelola umur.
-Route::post('proses-umur', function(Request $request){
-
-    // Tambahkan validasi untuk input form.
-    $request->validate([
-        'umur' => 'required|integer|min:1'
-    ]);
-
-    // menyimpan nilai umur user ke dalam session.
-    $request->session()->put('umur', $request->umur);
-
-    // mengarahkan user ke dalam halaman utama.
-    return redirect()->route('halaman-utama');
-})->name('proses-umur');
+Route::post('proses-umur', [ProfileController::class, 'cek_umur'])->name('proses-umur');
 
 // menampilkan halaman utama jika memenuhi syarat (Lebih dari 18 tahun)
-Route::get('utama', function(){
-    return "Anda lebih dari 18 tahun, Selamat datang di halaman utama.";
-})->name('halaman-utama')->middleware(CheckAge::class);
+Route::get('utama', [ProfileController::class, 'halaman_utama'])->name('halaman-utama')->middleware(CheckAge::class);
 
 // ===================== end ============================================
 
-
 // routing dengan controller
+
+// menampilkan function index yang ada di ProfileController 
+
+Route::get('profile', [ProfileController::class, 'index']);

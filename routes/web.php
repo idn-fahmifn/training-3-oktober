@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PhotosController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\CheckAge;
 use Illuminate\Http\Request;
@@ -75,5 +76,9 @@ Route::get('utama', [ProfileController::class, 'halaman_utama'])->name('halaman-
 // routing dengan controller
 
 // menampilkan function index yang ada di ProfileController 
+Route::get('profile', [ProfileController::class, 'index'])->name('halaman-profile');
 
-Route::get('profile', [ProfileController::class, 'index']);
+// routing dengan resource
+Route::resource('photos', PhotosController::class);
+
+

@@ -79,6 +79,7 @@ Route::get('utama', [ProfileController::class, 'halaman_utama'])->name('halaman-
 Route::get('profile', [ProfileController::class, 'index'])->name('halaman-profile');
 
 // routing dengan resource
-Route::resource('photos', PhotosController::class);
+Route::resource('foto', PhotosController::class);
+
 
 

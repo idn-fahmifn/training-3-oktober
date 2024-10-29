@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Photo;
 use Illuminate\Http\Request;
 
 class PhotosController extends Controller
@@ -11,7 +12,8 @@ class PhotosController extends Controller
      */
     public function index()
     {
-        return "hallo, ini halaman index";
+        $data = Photo::all();
+        return view('photo.index', compact('data'));
     }
 
     /**
@@ -27,15 +29,18 @@ class PhotosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all(); //mengambil semua nilai yang diinputkan ke dalam $input.
+        Photo::create($input);
+        return back()->with('success', 'Data photo berhasil ditambahkan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        return "hallo, ini halaman Detail";
+        $data = Photo::find($id);
+        return view('photo.detail', compact('data'));
     }
 
     /**
@@ -49,16 +54,21 @@ class PhotosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $input = $request->all(); //mengambil semua nilai yang ada di form update.
+        $data = Photo::find($id); //mencari id data yang spesifik untuk diganti.
+        $data->update($input); //update data dari input terbaru.
+        return back()->with('success', 'Data berhasil diubah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $data = Photo::find($id);
+        $data->delete();
+        return back()->with('success', 'Data berhasil dihapus');
     }
 }
